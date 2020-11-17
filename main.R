@@ -1,10 +1,10 @@
 source("R/packages.R")
 source("R/functions.R")
 
-# df <- readr::read_csv("data/ships.csv") %>%
-#   janitor::clean_names()
-
-# df_agg <- agg_ship_data(df)
+df_agg <- read_data(
+  raw_file = "data/raw/ships.csv",
+  agg_file = "data/processed/ships_agg.rds"
+)
 
 ui <- semanticPage(
   title = "Dropdown example",
@@ -18,7 +18,7 @@ ui <- semanticPage(
     choices = NULL,
     type = "selection fluid"
   ),
-  leafletOutput("mymap")
+  leafletOutput("map")
 )
 
 
@@ -39,7 +39,7 @@ server <- shinyServer(function(input, output, session) {
     update_dropdown_input(session, "ship_id_dropdown", choices = ship_id_choices())
   })
 
-  output$mymap <- renderLeaflet({
+  output$map <- renderLeaflet({
     leaflet(selected_ship()) %>%
       addTiles() %>%
       addMarkers(lng = ~ c(lon, lon_next), lat = ~ c(lat, lat_next))
