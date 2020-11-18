@@ -1,3 +1,12 @@
+#' Title
+#'
+#' @param raw_file
+#' @param agg_file
+#'
+#' @return
+#' @export
+#'
+#' @examples
 read_data <- function(raw_file, agg_file) {
   if (file.exists(agg_file)) {
     agg_data <- read_rds(agg_file)
@@ -12,6 +21,14 @@ read_data <- function(raw_file, agg_file) {
   agg_data
 }
 
+#' Title
+#'
+#' @param df
+#'
+#' @return
+#' @export
+#'
+#' @examples
 agg_ship <- function(df) {
   df %>%
     select(ship_type, ship_id, datetime, lat, lon) %>%
