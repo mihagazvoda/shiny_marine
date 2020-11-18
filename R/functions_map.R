@@ -1,5 +1,8 @@
 mapOutput <- function(id) {
-  tagList(leafletOutput(NS(id, "map")))
+  tagList(
+    textOutput(NS(id, "text")),
+    leafletOutput(NS(id, "map"))
+  )
 }
 
 mapServer <- function(id, data, ship_type, ship_id) {
@@ -7,12 +10,20 @@ mapServer <- function(id, data, ship_type, ship_id) {
   stopifnot(is.reactive(ship_id))
 
   moduleServer(id, function(input, output, session) {
-    output$map <- renderLeaflet({
+    selected_ship <- reactive({
       data %>%
         filter(
           ship_type == ship_type(),
           ship_id == ship_id()
-        ) %>%
+        )
+    })
+
+    output$text <- renderText({
+      distance <- glue::glue("The longest distance between 2 consecutive points: {as.integer(round(selected_ship()$dist))} meters.")
+    })
+
+    output$map <- renderLeaflet({
+      selected_ship() %>%
         leaflet() %>%
         addTiles() %>%
         addMarkers(lng = ~ c(lon, lon_next), lat = ~ c(lat, lat_next))

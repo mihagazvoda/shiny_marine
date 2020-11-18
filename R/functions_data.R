@@ -41,3 +41,4 @@ agg_ship <- function(df) {
     arrange(desc(dist, datetime)) %>%
     slice_head(n = 1)
 }
+
