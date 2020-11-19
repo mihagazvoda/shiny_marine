@@ -1,6 +1,6 @@
 library(dplyr)
-library(geosphere)
 library(shiny.semantic)
 library(leaflet)
 library(readr)
 library(zeallot)
+library(tibble)

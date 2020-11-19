@@ -1,6 +1,8 @@
 dropdownUI <- function(id, data) {
   tagList(
+    p("Ship type:"),
     dropdown_input(NS(id, "ship_type"), choices = unique(data$ship_type)),
+    p("Ship id:"),
     dropdown_input(NS(id, "ship_id"), choices = NULL)
   )
 }

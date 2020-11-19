@@ -1,11 +1,11 @@
-mapOutput <- function(id) {
+infographicOutput <- function(id) {
   tagList(
     textOutput(NS(id, "text")),
     leafletOutput(NS(id, "map"))
   )
 }
 
-mapServer <- function(id, data, ship_type, ship_id) {
+infographicServer <- function(id, data, ship_type, ship_id) {
   stopifnot(is.reactive(ship_type))
   stopifnot(is.reactive(ship_id))
 
@@ -19,7 +19,7 @@ mapServer <- function(id, data, ship_type, ship_id) {
     })
 
     output$text <- renderText({
-      distance <- glue::glue("The longest distance between 2 consecutive points: {as.integer(round(selected_ship()$dist))} meters.")
+      distance <- glue::glue("Distance: { as.integer(round(selected_ship()$dist)) } meters.")
     })
 
     output$map <- renderLeaflet({
